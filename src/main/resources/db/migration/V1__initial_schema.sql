@@ -1,17 +1,7 @@
 -- Initial schema for TodoList application
--- This is a placeholder migration to set up Flyway
+-- This is a placeholder migration to establish the Flyway baseline
+-- Flyway will automatically create its own schema history table (flyway_schema_history)
 -- Future migrations will add user, checklist, and todo tables
 
-CREATE TABLE IF NOT EXISTS flyway_schema_history (
-    installed_rank INT NOT NULL,
-    version VARCHAR(50),
-    description VARCHAR(200) NOT NULL,
-    type VARCHAR(20) NOT NULL,
-    script VARCHAR(1000) NOT NULL,
-    checksum INT,
-    installed_by VARCHAR(100) NOT NULL,
-    installed_on TIMESTAMP NOT NULL DEFAULT now(),
-    execution_time INT NOT NULL,
-    success BOOLEAN NOT NULL,
-    CONSTRAINT flyway_schema_history_pk PRIMARY KEY (installed_rank)
-);
+-- Placeholder: No tables created in this initial migration
+
