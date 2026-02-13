@@ -176,6 +176,3 @@ class AuthControllerTest {
             .andExpect(jsonPath("$.message").value("Logged out successfully"))
     }
 }
-
-
-

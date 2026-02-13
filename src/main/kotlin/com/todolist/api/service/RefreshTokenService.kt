@@ -2,6 +2,7 @@ package com.todolist.api.service
 
 import com.todolist.api.entity.RefreshToken
 import com.todolist.api.entity.User
+import com.todolist.api.exception.RefreshTokenExpiredException
 import com.todolist.api.repository.RefreshTokenRepository
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -33,7 +34,7 @@ class RefreshTokenService(
     fun verifyExpiration(token: RefreshToken): RefreshToken {
         if (token.expiryDate.isBefore(LocalDateTime.now())) {
             refreshTokenRepository.delete(token)
-            throw RuntimeException("Refresh token expired. Please login again.")
+            throw RefreshTokenExpiredException("Refresh token expired. Please login again.")
         }
         return token
     }

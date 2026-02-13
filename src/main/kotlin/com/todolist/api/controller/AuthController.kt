@@ -2,6 +2,7 @@ package com.todolist.api.controller
 
 import com.todolist.api.dto.*
 import com.todolist.api.entity.User
+import com.todolist.api.exception.RefreshTokenNotFoundException
 import com.todolist.api.repository.UserRepository
 import com.todolist.api.service.CustomUserDetailsService
 import com.todolist.api.service.JwtService
@@ -12,7 +13,6 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
-import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/api/auth")
@@ -54,7 +54,7 @@ class AuthController(
 
         val userDetails = userDetailsService.loadUserByUsername(request.username)
         val user = userRepository.findByUsername(request.username)
-            .orElseThrow { RuntimeException("User not found") }
+            .orElseThrow { IllegalStateException("User not found after successful authentication") }
 
         val accessToken = jwtService.generateToken(userDetails)
         val refreshToken = refreshTokenService.createRefreshToken(user)
@@ -83,7 +83,7 @@ class AuthController(
                     )
                 )
             }
-            .orElseThrow { RuntimeException("Refresh token not found") }
+            .orElseThrow { RefreshTokenNotFoundException("Refresh token not found") }
     }
 
     @PostMapping("/logout")
